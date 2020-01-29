@@ -77,7 +77,7 @@ module.exports = merge.smart(
          //    paths: glob.sync(path.join(__dirname, '../src/**/*.js')),
          //    purifyOptions: { info: true, minify: true, whitelist: ['*purify*'] }
          // }),
-         new CopyPlugin([{ from: './public/_redirects', to: './' }]),
+         new CopyPlugin([{ from: 'public', ignore: ['index.html'] }]),
          new BundleAnalyzerPlugin({ analyzerMode: 'static', openAnalyzer: false })
       ]
    },
