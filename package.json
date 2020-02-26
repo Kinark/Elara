@@ -4,8 +4,8 @@
    "description": "A dead-simple react/sass boilerplate.",
    "scripts": {
       "test": "echo \"Error: no test specified\" && exit 1",
-      "start": "NODE_ENV=development webpack-dev-server --config ./config/webpack.dev.js",
-      "build": "NODE_ENV=production webpack -p --config ./config/webpack.prod.js",
+      "start": "cross-env NODE_ENV=development webpack-dev-server --config ./config/webpack.dev.js",
+      "build": "cross-env NODE_ENV=production webpack -p --config ./config/webpack.prod.js",
       "postbuild": "babel-node ./config/sitemap-builder.js"
    },
    "repository": {
@@ -44,6 +44,7 @@
       "babel-preset-react-optimize": "^1.0.1",
       "clean-webpack-plugin": "^1.0.0",
       "copy-webpack-plugin": "^5.0.3",
+      "cross-env": "^7.0.0",
       "css-loader": "^1.0.1",
       "eslint": "^5.9.0",
       "eslint-config-airbnb": "^17.1.0",
