@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react'
 import { Route, Switch } from 'react-router-dom'
-import { AnimatedSwitch } from 'react-router-transition'
 
 import Home from '~/views/Home'
 // import Component from '~/views/Component';
