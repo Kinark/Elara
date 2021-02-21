@@ -1,24 +1,24 @@
-const path = require('path');
+const path = require('path')
 
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
    template: './public/index.html',
    filename: 'index.html',
    inject: 'body'
-});
+})
 
 const fontLoader = {
    loader: 'url-loader',
    options: {
-      name: 'static/fonts/[name].[ext]',
+      name: 'static/fonts/[name].[ext]'
    }
 }
 
 const postCssLoader = {
    loader: 'postcss-loader',
    options: {
-      config: {
+      postcssOptions: {
          path: './config/postcss.config.js'
       }
    }
@@ -26,10 +26,9 @@ const postCssLoader = {
 
 const cssLoader = {
    loader: 'css-loader',
-   query: {
+   options: {
       importLoaders: 3,
       localIdentName: '[local]_[hash:base64:5]',
-      minimize: true,
       modules: true
    }
 }
@@ -37,8 +36,7 @@ const cssLoader = {
 const scssLoader = {
    loader: 'sass-loader',
    options: {
-      sourceMap: true,
-      sourceMapContents: false
+      sourceMap: true
    }
 }
 
@@ -52,13 +50,13 @@ module.exports = {
          { test: /\.global\.(css|scss|sass)$/, use: ['css-loader', postCssLoader, 'resolve-url-loader', scssLoader] },
          { test: /^((?!\.global).)*\.(css|scss|sass)$/, use: [cssLoader, postCssLoader, 'resolve-url-loader', scssLoader] },
          { test: /\.(js|jsx)$/, use: [{ loader: 'babel-loader', options: { cacheDirectory: true } }], exclude: /node_modules/ },
-         { test: /\.(otf|ttf|eot|woff|woff2)(\?v=\d+\.\d+\.\d+)?$/, use: [fontLoader] },
-      ],
+         { test: /\.(otf|ttf|eot|woff|woff2)(\?v=\d+\.\d+\.\d+)?$/, use: [fontLoader] }
+      ]
    },
    plugins: [HtmlWebpackPluginConfig],
    resolve: {
       alias: {
-         '~': path.resolve(__dirname, '../src'),
+         '~': path.resolve(__dirname, '../src')
       }
-   },
+   }
 }

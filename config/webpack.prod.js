@@ -2,9 +2,9 @@ const path = require('path')
 // const glob = require('glob')
 
 const MinifyJsPlugin = require('babel-minify-webpack-plugin')
-const ManifestPlugin = require('webpack-manifest-plugin')
+const { WebpackManifestPlugin } = require('webpack-manifest-plugin')
 const ImageminPlugin = require('imagemin-webpack-plugin').default
-const CleanWebpackPlugin = require('clean-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
@@ -15,7 +15,7 @@ const imageminMozjpeg = require('imagemin-jpegtran')
 const imageminPngquant = require('imagemin-pngquant')
 const imageminSvgo = require('imagemin-svgo')
 
-const merge = require('webpack-merge')
+const { merge } = require('webpack-merge')
 const common = require('./webpack.common.js')
 
 const ManifestPluginConfig = {
@@ -53,7 +53,7 @@ const imgLoader = {
    }
 }
 
-module.exports = merge.smart(
+module.exports = merge(
    {
       mode: 'production',
       output: {
@@ -69,15 +69,15 @@ module.exports = merge.smart(
       },
       plugins: [
          new MinifyJsPlugin(),
-         new CleanWebpackPlugin(['dist/**/*'], { root: path.resolve(__dirname, '../') }),
+         new CleanWebpackPlugin({ cleanAfterEveryBuildPatterns: ['dist/**/*'] }),
          new ImageminPlugin(),
-         new ManifestPlugin(ManifestPluginConfig),
+         new WebpackManifestPlugin(ManifestPluginConfig),
          new MiniCssExtractPlugin({ filename: 'static/css/[name].css', chunkFilename: '[id].css' }),
          // new PurifyCSSPlugin({
          //    paths: glob.sync(path.join(__dirname, '../src/**/*.js')),
          //    purifyOptions: { info: true, minify: true, whitelist: ['*purify*'] }
          // }),
-         new CopyPlugin([{ from: 'public', ignore: ['index.html'] }]),
+         new CopyPlugin({ patterns: [{ from: 'public', filter: async (resourcePath) => !resourcePath.endsWith('index.html') }] }),
          new BundleAnalyzerPlugin({ analyzerMode: 'static', openAnalyzer: false })
       ]
    },
